@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.example.ligasubmission">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example.ligasubmission">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
             android:allowBackup="true"
@@ -8,10 +11,17 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetilActivity.DetilActivity">
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ListDetailMatchActivity.ListDetailMatchActivity">
         </activity>
-        <activity android:name=".MainActivity.MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".ListLeagueActivity.ListLeagueActivity">
+        </activity>
+        <activity android:name=".LeagueDetailActivity.LeagueDetailActivity">
+        </activity>
+        <activity
+                android:name=".MainActivity.MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

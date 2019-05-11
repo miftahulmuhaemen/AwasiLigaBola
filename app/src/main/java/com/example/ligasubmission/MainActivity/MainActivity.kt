@@ -3,27 +3,42 @@ package com.example.ligasubmission.MainActivity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import com.example.ligasubmission.DetilActivity.DetilActivity
-import com.example.ligasubmission.Model.Item
-import com.example.ligasubmission.R
+import android.widget.ProgressBar
+import com.example.ligasubmission.ListLeagueActivity.ListLeagueActivity
+import com.example.ligasubmission.Model.InitialLeague
+import com.example.ligasubmission.Util.Util.Companion.DETIL_TRANSACTION
+import com.example.ligasubmission.Util.invisible
+import com.example.ligasubmission.Util.visible
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainView {
 
-    companion object {
-        val DETIL_TRANSACTION = "detil"
+
+    override fun showLoading() {
+        progressBar.visible()
     }
 
-    private var items: MutableList<Item> = mutableListOf()
+    override fun hideLoading() {
+        progressBar.invisible()
+    }
+
+    override fun showTeamList(data: List<InitialLeague>) {
+        leagues.clear()
+        leagues.addAll(data)
+        mAdapter.notifyDataSetChanged()
+    }
+
+    private var leagues: MutableList<InitialLeague> = mutableListOf()
+    private lateinit var mAdapter: MainActivityListAdapter
+    private lateinit var presenter: MainPresenter
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initData()
-
-        val mAdapter = RecyclerViewAdapter(items) {
-            startActivity<DetilActivity>(DETIL_TRANSACTION to it)
+         mAdapter = MainActivityListAdapter(leagues) {
+            startActivity<ListLeagueActivity>(DETIL_TRANSACTION to it)
         }
 
         relativeLayout{
@@ -31,39 +46,20 @@ class MainActivity : AppCompatActivity() {
             lparams (width = matchParent, height = wrapContent)
             recyclerView{
                 lparams (width = matchParent, height = wrapContent)
-                layoutManager = GridLayoutManager(this@MainActivity,2)
+                layoutManager = GridLayoutManager(this@MainActivity, 2)
                 adapter = mAdapter
+            }
+
+            progressBar = progressBar {
+            }.lparams{
+                centerHorizontally()
             }
         }
 
-//        MainActivityUI(adapter).setContentView(this)
+        presenter = MainPresenter(this)
+        presenter.initData()
+
     }
 
-
-    private fun initData(){
-        val id = resources.getStringArray(R.array.club_id)
-        val name = resources.getStringArray(R.array.club_name)
-        val image = resources.obtainTypedArray(R.array.club_image)
-        val desc = resources.getStringArray(R.array.club_desc)
-
-        items.clear()
-        for (i in name.indices) {
-            items.add(
-                Item(
-                    id[i].toInt(), name[i], desc[i],
-                    image.getResourceId(i, 0)
-                )
-            )
-        }
-
-        //Recycle the typed array
-        image.recycle()
-    }
-
-//    class MainActivityUI(val mAdapter: RecyclerViewAdapter) : AnkoComponent<MainActivity> {
-//        override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
-//
-//        }
-//    }
 
 }

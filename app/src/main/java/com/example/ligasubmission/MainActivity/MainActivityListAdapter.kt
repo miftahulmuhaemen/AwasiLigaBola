@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import com.example.ligasubmission.Model.Item
+import com.example.ligasubmission.Model.InitialLeague
 import com.squareup.picasso.Picasso
 import com.example.ligasubmission.R.id.*
 import org.jetbrains.anko.*
 
 
-class RecyclerViewAdapter(private val items: List<Item>, private val listener: (Item) -> Unit) : RecyclerView.Adapter<TeamViewHolder>() {
+class MainActivityListAdapter(private val leagues: List<InitialLeague>, private val listener: (InitialLeague) -> Unit) : RecyclerView.Adapter<TeamViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         return TeamViewHolder(
@@ -24,10 +24,10 @@ class RecyclerViewAdapter(private val items: List<Item>, private val listener: (
     }
 
     override fun onBindViewHolder(holder: TeamViewHolder, position: Int) {
-        holder.bindItem(items[position], listener)
+        holder.bindItem(leagues[position], listener)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = leagues.size
 }
 
 class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -36,7 +36,7 @@ class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val gambar: ImageView = view.find(imagez)
     private val kotak: RelativeLayout = view.find(clickbox)
 
-    fun bindItem(items: Item, listener: (Item) -> Unit) {
+    fun bindItem(items: InitialLeague, listener: (InitialLeague) -> Unit) {
         nama.text = items.name
         items.img?.let { Picasso.get().load(it).into(gambar) }
         kotak.setOnClickListener { listener(items) }
