@@ -7,17 +7,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import com.example.ligasubmission.Model.Event
-import com.example.ligasubmission.R
-import com.squareup.picasso.Picasso
 import com.example.ligasubmission.R.id.*
 import org.jetbrains.anko.*
 
 
-class ListLeagueActivityListAdapter(private val events: List<Event>, private val listener: (Event) -> Unit) : RecyclerView.Adapter<TeamViewHolder>() {
+class ListLeagueActivityListAdapter(private var events: List<Event>, private val listener: (Event) -> Unit) : RecyclerView.Adapter<TeamViewHolder>(), Filterable {
+
+    private val originalItem: List<Event> = events
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TeamViewHolder {
         return TeamViewHolder(
@@ -32,6 +30,32 @@ class ListLeagueActivityListAdapter(private val events: List<Event>, private val
     }
 
     override fun getItemCount(): Int = events.size
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    events = originalItem
+                } else {
+                    val filteredList = ArrayList<Event>()
+                    for (row in events) {
+                        if (row.strHomeTeam!!.toLowerCase().contains(charString.toLowerCase()) || row.strAwayTeam!!.contains(charSequence)) {
+                            filteredList.add(row)
+                        }
+                    }
+                    events = filteredList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = events
+                return filterResults
+            }
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                events = filterResults.values as ArrayList<Event>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
 
 class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -43,9 +67,6 @@ class TeamViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     @SuppressLint("SetTextI18n")
     fun bindItem(items: Event, listener: (Event) -> Unit) {
-        score.text = "0 : 0"
-
-        if(items.intHomeScore != null)
         score.text = items.intHomeScore + " : " + items.intAwayScore
         home.text = items.strHomeTeam
         away.text = items.strAwayTeam

@@ -1,33 +1,21 @@
 package com.example.ligasubmission.LeagueDetailActivity
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.TabLayout
-import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.ligasubmission.API.ApiRepository
-import com.example.ligasubmission.ListLeagueActivity.ListLeaguePresenter
 import com.example.ligasubmission.Model.InitialLeague
 import com.example.ligasubmission.Model.League
-import com.example.ligasubmission.R
 import com.example.ligasubmission.Util.Util.Companion.DETIL_TRANSACTION
 import com.example.ligasubmission.Util.invisible
 import com.example.ligasubmission.Util.visible
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
-import org.jetbrains.anko.design.appBarLayout
-import org.jetbrains.anko.design.coordinatorLayout
-import org.jetbrains.anko.design.themedTabLayout
-import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.support.v4.viewPager
 
 class LeagueDetailActivity : AppCompatActivity(), LeagueDetailView, AnkoLogger {
 

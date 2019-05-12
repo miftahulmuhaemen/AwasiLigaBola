@@ -9,10 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.SearchView
 import com.example.ligasubmission.API.ApiRepository
-import com.example.ligasubmission.LeagueDetailActivity.LeagueDetailActivity
 import com.example.ligasubmission.ListDetailMatchActivity.ListDetailMatchActivity
 import com.example.ligasubmission.Model.Event
+import com.example.ligasubmission.R
 import com.example.ligasubmission.Util.Util.Companion.DETIL_TRANSACTION
 import com.example.ligasubmission.Util.Util.Companion.LIST_LEAGUE_FRAGS
 import com.example.ligasubmission.Util.Util.Companion.LIST_LEAGUE_ID
@@ -23,10 +24,10 @@ import com.example.ligasubmission.Util.visible
 import com.google.gson.Gson
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.sdk27.coroutines.onQueryTextListener
 import org.jetbrains.anko.support.v4.UI
 
 class ListLeagueListFragment : Fragment(), ListLeagueView {
-
 
     override fun showLoading() {
         progressBar.visible()
@@ -54,6 +55,7 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
     private lateinit var progressBar: ProgressBar
     private lateinit var mAdapter: ListLeagueActivityListAdapter
     private lateinit var presenter: ListLeaguePresenter
+    private lateinit var search : SearchView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -61,13 +63,20 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
             relativeLayout{
                 padding = dip(16)
                 lparams (width = matchParent, height = wrapContent)
+
+                search = searchView {
+                    id = R.id.search
+                }.lparams(width = matchParent, height = wrapContent)
+
                 listTeam = recyclerView{
                     lparams (width = matchParent, height = wrapContent)
                     layoutManager = LinearLayoutManager(activity)
+                }.lparams {
+                    below(R.id.search)
                 }
                 progressBar = progressBar {
                 }.lparams{
-                    centerHorizontally()
+                   centerInParent()
                 }
             }
         }.view
@@ -95,6 +104,13 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
                     activity?.startActivity<ListDetailMatchActivity>(DETIL_TRANSACTION to it)
                 }
             }
+        }
+
+        search.onQueryTextListener {
+                onQueryTextChange { query ->
+                    mAdapter.filter.filter(query)
+                    false
+                }
         }
 
         listTeam.adapter = mAdapter

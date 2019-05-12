@@ -19,4 +19,21 @@
     <item name="strHomeYellowCards" type="id"/>
     <item name="strHomeLineupGoalkeeper" type="id"/>
     <item name="RedCards" type="id"/>
+    <item name="YellowCard" type="id"/>
+    <item name="GoalKeeper" type="id"/>
+    <item name="Midfield" type="id"/>
+    <item name="strHomeLineupMidfield" type="id"/>
+    <item name="Subtitute" type="id"/>
+    <item name="strHomeLineupSubstitutes" type="id"/>
+    <item name="Formation" type="id"/>
+    <item name="strHomeFormation" type="id"/>
+    <item name="Defense" type="id"/>
+    <item name="strHomeLineupDefense" type="id"/>
+    <item name="Forward" type="id"/>
+    <item name="strHomeLineupForward" type="id"/>
+    <item name="Shots" type="id"/>
+    <item name="Date" type="id"/>
+    <item name="intHomeShots" type="id"/>
+    <item name="search" type="id"/>
+    <item name="Score" type="id"/>
 </resources>

@@ -1,9 +1,6 @@
 package com.example.ligasubmission.LeagueDetailActivity
 
-import android.util.Log
 import com.example.ligasubmission.API.ApiRepository
-import com.example.ligasubmission.ListLeagueActivity.ListLeagueListFragment
-import com.example.ligasubmission.Model.EventsResponse
 import com.example.ligasubmission.Model.LeaguesResponse
 import com.google.gson.Gson
 import org.jetbrains.anko.doAsync

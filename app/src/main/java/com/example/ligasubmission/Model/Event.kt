@@ -75,6 +75,12 @@ data class Event(
     @SerializedName("strAwayLineupSubstitutes")
     var strAwayLineupSubstitutes: String? = null,
 
+    @SerializedName("strHomeLineupMidfield")
+    var strHomeLineupMidfield: String? = null,
+
+    @SerializedName("strAwayLineupMidfield")
+    var strAwayLineupMidfield: String? = null,
+
     @SerializedName("strAwayFormation")
     var strAwayFormation: String? = null,
 
