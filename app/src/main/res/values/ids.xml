@@ -36,4 +36,5 @@
     <item name="intHomeShots" type="id"/>
     <item name="search" type="id"/>
     <item name="Score" type="id"/>
+    <item name="homeTeamImage" type="id"/>
 </resources>

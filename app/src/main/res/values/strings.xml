@@ -11,6 +11,7 @@
     <string name="goalkeeper">LineUp Goal Keeper</string>
     <string name="redcard">RED CARD</string>
     <string name="goal">GOAL</string>
+
     <string-array name="club_id">
         <item>4328</item>
         <item>4334</item>
@@ -49,5 +50,9 @@
         <item>@drawable/scotish_premier_league</item>
         <item>@drawable/english_league_1</item>
     </array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="favorite">Favorites</string>
+    <string name="no_data">Tidak ada data</string>
 
 </resources>
