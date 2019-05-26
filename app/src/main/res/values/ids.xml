@@ -7,12 +7,6 @@
     <item name="ListLeagueViewpager" type="id"/>
     <item name="HomeScore" type="id"/>
     <item name="AwayScore" type="id"/>
-    <item name="Field3" type="id"/>
-    <item name="Field1" type="id"/>
-    <item name="Field2" type="id"/>
-    <item name="Field4" type="id"/>
-    <item name="Field5" type="id"/>
-    <item name="GoalDetail" type="id"/>
     <item name="Marker" type="id"/>
     <item name="strHomeGoal" type="id"/>
     <item name="strHomeRedCards" type="id"/>
@@ -37,4 +31,5 @@
     <item name="search" type="id"/>
     <item name="Score" type="id"/>
     <item name="homeTeamImage" type="id"/>
+    <item name="recylerVieww" type="id"/>
 </resources>

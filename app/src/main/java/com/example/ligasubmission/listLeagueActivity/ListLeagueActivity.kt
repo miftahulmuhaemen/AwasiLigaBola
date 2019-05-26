@@ -8,10 +8,10 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.widget.ImageView
+import com.example.ligasubmission.R
 import com.example.ligasubmission.favoriteActivity.FavoritActivity
 import com.example.ligasubmission.leagueDetailActivity.LeagueDetailActivity
 import com.example.ligasubmission.model.InitialLeague
-import com.example.ligasubmission.R
 import com.example.ligasubmission.util.AnkoLayoutConst.Margin_16dp
 import com.example.ligasubmission.util.Util.DETIL_TRANSACTION
 import com.squareup.picasso.Picasso
@@ -35,7 +35,6 @@ class ListLeagueActivity : AppCompatActivity() {
         val intent = intent
         val league: InitialLeague = intent.getParcelableExtra(DETIL_TRANSACTION)
         val mAdapter = ListLeaguePageAdapter(supportFragmentManager, league.id.toString())
-
 
         coordinatorLayout {
             lparams(matchParent, matchParent)
@@ -85,8 +84,6 @@ class ListLeagueActivity : AppCompatActivity() {
             }.lparams {
                 bottomMargin = dip(Margin_16dp)
             }
-
-
         }
 
         myTabLayout.setupWithViewPager(myViewPager)

@@ -10,31 +10,25 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.ligasubmission.api.ApiRepository
-import com.example.ligasubmission.leagueDetailActivity.ListDetailMatchPresenter
-import com.example.ligasubmission.leagueDetailActivity.ListDetailMatchView
-import com.example.ligasubmission.model.Event
 import com.example.ligasubmission.R
 import com.example.ligasubmission.R.drawable.ic_add_to_favorites
 import com.example.ligasubmission.R.drawable.ic_added_to_favorites
 import com.example.ligasubmission.R.menu.detail_menu
+import com.example.ligasubmission.api.ApiRepository
+import com.example.ligasubmission.model.Event
+import com.example.ligasubmission.model.Team
+import com.example.ligasubmission.util.AnkoLayoutConst.Margin_16dp
+import com.example.ligasubmission.util.AnkoLayoutConst.Margin_8dp
 import com.example.ligasubmission.util.Util
-import com.example.ligasubmission.util.Util.Companion.Margin_16dp
-import com.example.ligasubmission.util.Util.Companion.Margin_8dp
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
 
 class ListDetailMatchActivity : AppCompatActivity(), AnkoLogger, ListDetailMatchView {
 
-    override fun showTeamLogo(homeTeam: String, awayTeam: String) {
-        homeTeam.let {
-            Picasso.get().load(it).into(mHomeTeamImage)
-        }
-
-        awayTeam.let {
-            Picasso.get().load(it).into(mAwayTeamImage)
-        }
+    override fun showTeamLogo(homeTeam: List<Team>?, awayTeam: List<Team>?) {
+        Picasso.get().load(homeTeam?.last()?.strTeamBadge).into(mHomeTeamImage)
+        Picasso.get().load(awayTeam?.last()?.strTeamBadge).into(mAwayTeamImage)
     }
 
     override fun favoriteState(state: Boolean) {
@@ -123,7 +117,7 @@ class ListDetailMatchActivity : AppCompatActivity(), AnkoLogger, ListDetailMatch
         val request = ApiRepository()
         val gson = Gson()
 
-        presenter = ListDetailMatchPresenter(this, event, league, request, gson)
+        presenter = ListDetailMatchPresenter(this, this, event, league, request, gson)
         presenter.favoriteState()
         presenter.getTeamPicture()
 

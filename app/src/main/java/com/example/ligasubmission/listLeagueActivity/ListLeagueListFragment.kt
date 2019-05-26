@@ -11,12 +11,13 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.TextView
+import com.example.ligasubmission.R
 import com.example.ligasubmission.api.ApiRepository
 import com.example.ligasubmission.listDetailMatchActivity.ListDetailMatchActivity
 import com.example.ligasubmission.model.Event
-import com.example.ligasubmission.R
 import com.example.ligasubmission.util.DatabaseConst.TABLE_FAVORITE_NEXT
 import com.example.ligasubmission.util.DatabaseConst.TABLE_FAVORITE_PAST
+import com.example.ligasubmission.util.EspressoIdlingResource
 import com.example.ligasubmission.util.Util.DETIL_TRANSACTION
 import com.example.ligasubmission.util.Util.LIST_LEAGUE_FRAGS
 import com.example.ligasubmission.util.Util.LIST_LEAGUE_ID
@@ -41,6 +42,9 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
     }
 
     override fun showPastLeague(data: List<Event>?) {
+        if (!EspressoIdlingResource.idlingresource.isIdleNow)
+            EspressoIdlingResource.decrement()
+
         pastEvent.clear()
         data?.let { pastEvent.addAll(it) }
         mAdapter.notifyDataSetChanged()
@@ -48,6 +52,9 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
     }
 
     override fun showNextLeague(data: List<Event>?) {
+        if (!EspressoIdlingResource.idlingresource.isIdleNow)
+            EspressoIdlingResource.decrement()
+
         nextEvent.clear()
         data?.let { nextEvent.addAll(it) }
         mAdapter.notifyDataSetChanged()
@@ -65,6 +72,7 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+
         return UI {
             relativeLayout {
                 padding = dip(16)
@@ -73,6 +81,7 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
                     id = R.id.search
                 }.lparams(width = matchParent, height = wrapContent)
                 listTeam = recyclerView {
+                    id = R.id.recylerVieww
                     lparams(width = matchParent, height = wrapContent)
                     layoutManager = LinearLayoutManager(activity)
                 }.lparams {
@@ -99,6 +108,7 @@ class ListLeagueListFragment : Fragment(), ListLeagueView {
         val gson = Gson()
         presenter = ListLeaguePresenter(this, request, gson)
 
+        EspressoIdlingResource.increment()
 
         val fragmentSwitch = arguments?.getString(LIST_LEAGUE_FRAGS)
         val idLeague = arguments?.getString(LIST_LEAGUE_ID)

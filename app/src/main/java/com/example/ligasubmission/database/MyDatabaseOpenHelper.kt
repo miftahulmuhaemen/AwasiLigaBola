@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase
 import com.example.ligasubmission.util.DatabaseConst.TABLE_FAVORITE_NEXT
 import com.example.ligasubmission.util.DatabaseConst.TABLE_FAVORITE_PAST
 import com.example.ligasubmission.util.DatabaseConst.dateEvent
+import com.example.ligasubmission.util.DatabaseConst.idAwayTeam
 import com.example.ligasubmission.util.DatabaseConst.idEvent
+import com.example.ligasubmission.util.DatabaseConst.idHomeTeam
 import com.example.ligasubmission.util.DatabaseConst.intAwayScore
 import com.example.ligasubmission.util.DatabaseConst.intAwayShots
 import com.example.ligasubmission.util.DatabaseConst.intHomeScore
@@ -86,7 +88,9 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             dateEvent to TEXT,
             strDate to TEXT,
             strTime to TEXT,
-            strThumb to TEXT
+            strThumb to TEXT,
+            idHomeTeam to TEXT,
+            idAwayTeam to TEXT
         )
 
         db.createTable(
@@ -122,7 +126,9 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             dateEvent to TEXT,
             strDate to TEXT,
             strTime to TEXT,
-            strThumb to TEXT
+            strThumb to TEXT,
+            idHomeTeam to TEXT,
+            idAwayTeam to TEXT
         )
     }
 

@@ -1,13 +1,15 @@
-package com.example.ligasubmission.leagueDetailActivity
+package com.example.ligasubmission.listDetailMatchActivity
 
 import android.database.sqlite.SQLiteConstraintException
 import com.example.ligasubmission.api.ApiRepository
 import com.example.ligasubmission.database.database
-import com.example.ligasubmission.listDetailMatchActivity.ListDetailMatchActivity
 import com.example.ligasubmission.model.Event
 import com.example.ligasubmission.model.TeamResponse
+import com.example.ligasubmission.util.CoroutineContextProvider
 import com.example.ligasubmission.util.DatabaseConst.dateEvent
+import com.example.ligasubmission.util.DatabaseConst.idAwayTeam
 import com.example.ligasubmission.util.DatabaseConst.idEvent
+import com.example.ligasubmission.util.DatabaseConst.idHomeTeam
 import com.example.ligasubmission.util.DatabaseConst.intAwayScore
 import com.example.ligasubmission.util.DatabaseConst.intAwayShots
 import com.example.ligasubmission.util.DatabaseConst.intHomeScore
@@ -38,26 +40,28 @@ import com.example.ligasubmission.util.DatabaseConst.strHomeTeam
 import com.example.ligasubmission.util.DatabaseConst.strHomeYellowCards
 import com.example.ligasubmission.util.DatabaseConst.strThumb
 import com.example.ligasubmission.util.DatabaseConst.strTime
-import com.example.ligasubmission.util.Util
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 
 class ListDetailMatchPresenter(
-    private val view: ListDetailMatchActivity,
+    private val activity: ListDetailMatchActivity,
+    private val view: ListDetailMatchView,
     private val event: Event,
     private val status: String,
     private val apiRepository: ApiRepository,
-    private val gson: Gson
-) {
+    private val gson: Gson,
+    private val context: CoroutineContextProvider = CoroutineContextProvider()
+) : AnkoLogger {
 
     fun getTeamPicture() {
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
+
             val home = gson.fromJson(
                 apiRepository
                     .doRequestAsync(ApiRepository.TheSportDBApi.getTeamDetail(event.idHomeTeam)).await(),
@@ -69,20 +73,14 @@ class ListDetailMatchPresenter(
                     .doRequestAsync(ApiRepository.TheSportDBApi.getTeamDetail(event.idAwayTeam)).await(),
                 TeamResponse::class.java
             )
-            away.teams.last().strTeamBadge?.let {
-                home.teams.last().strTeamBadge?.let { it1 ->
-                    view.showTeamLogo(
-                        it1,
-                        it
-                    )
-                }
-            }
+
+            view.showTeamLogo(home.teams, away.teams)
         }
     }
 
     fun addToFavorite() {
         try {
-            view.database.use {
+            activity.database.use {
                 insert(
                     status,
                     idEvent to event.idEvent,
@@ -116,38 +114,40 @@ class ListDetailMatchPresenter(
                     dateEvent to event.dateEvent,
                     strDate to event.strDate,
                     strTime to event.strTime,
-                    strThumb to event.strThumb
+                    strThumb to event.strThumb,
+                    idHomeTeam to event.idHomeTeam,
+                    idAwayTeam to event.idAwayTeam
                 )
             }
-            view.showLeagueDetail("Match added to Favorite")
+            activity.showLeagueDetail("Match added to Favorite")
         } catch (e: SQLiteConstraintException) {
-            view.showLeagueDetail(e.localizedMessage)
+            activity.showLeagueDetail(e.localizedMessage)
         }
     }
 
     fun removeFromFavorite() {
         try {
-            view.database.use {
+            activity.database.use {
                 delete(
                     status, "(idEvent = {id})",
                     "id" to event.idEvent.toString()
                 )
             }
-            view.showLeagueDetail("Removed from Favorite")
+            activity.showLeagueDetail("Removed from Favorite")
         } catch (e: SQLiteConstraintException) {
-            view.showLeagueDetail(e.localizedMessage)
+            activity.showLeagueDetail(e.localizedMessage)
         }
     }
 
     fun favoriteState() {
-        view.database.use {
+        activity.database.use {
             val result = select(status)
                 .whereArgs(
                     "(idEvent = {id})",
                     "id" to event.idEvent.toString()
                 )
             val favorite = result.parseList(classParser<Event>())
-            view.favoriteState(favorite.isEmpty())
+            activity.favoriteState(favorite.isEmpty())
         }
     }
 

@@ -5,16 +5,14 @@ import com.example.ligasubmission.database.MyDatabaseOpenHelper
 import com.example.ligasubmission.model.Event
 import com.example.ligasubmission.util.DatabaseConst.TABLE_FAVORITE_NEXT
 import com.example.ligasubmission.util.DatabaseConst.TABLE_FAVORITE_PAST
-import com.example.ligasubmission.util.Util
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 
 class FavoritPresenter(
     private val view: FavoritFragment
-
 ) {
 
-    val Context.database: MyDatabaseOpenHelper
+    private val Context.database: MyDatabaseOpenHelper
         get() = MyDatabaseOpenHelper.getInstance(applicationContext)
 
     fun getFavoriteNext() {

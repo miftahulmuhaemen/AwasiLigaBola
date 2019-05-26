@@ -4,20 +4,21 @@ import android.annotation.SuppressLint
 import com.example.ligasubmission.api.ApiRepository
 import com.example.ligasubmission.model.Event
 import com.example.ligasubmission.model.EventsResponse
+import com.example.ligasubmission.util.CoroutineContextProvider
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ListLeaguePresenter(
-    private val view: ListLeagueListFragment,
+    private val view: ListLeagueView,
     private val apiRepository: ApiRepository,
-    private val gson: Gson
+    private val gson: Gson,
+    private val context: CoroutineContextProvider = CoroutineContextProvider()
 ) {
 
     fun getPreviousMatch(league: String?) {
         view.showLoading()
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
             val data = gson.fromJson(
                 apiRepository
                     .doRequestAsync(ApiRepository.TheSportDBApi.getPreviousMatch(league)).await(),
@@ -32,7 +33,7 @@ class ListLeaguePresenter(
 
     fun getNextMatch(league: String?) {
         view.showLoading()
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(context.main) {
             val data = gson.fromJson(
                 apiRepository
                     .doRequestAsync(ApiRepository.TheSportDBApi.getNextMatch(league)).await(),
@@ -40,7 +41,7 @@ class ListLeaguePresenter(
             )
 
             view.hideLoading()
-            view.showPastLeague(Filter(data.events))
+            view.showNextLeague(Filter(data.events))
         }
     }
 

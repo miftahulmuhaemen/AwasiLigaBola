@@ -1,6 +1,5 @@
 package com.example.ligasubmission.api
 
-import android.net.Uri
 import com.example.ligasubmission.BuildConfig
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
@@ -10,52 +9,21 @@ import java.net.URL
 class ApiRepository {
 
     object TheSportDBApi {
+
         fun getDetailLeague(idLeague: String?): String {
-            return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("json")
-                .appendPath(BuildConfig.TSDB_API_KEY)
-                .appendPath("lookupleague.php")
-                .appendQueryParameter("id", idLeague)
-                .build()
-                .toString()
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupleague.php?id=" + idLeague
         }
 
         fun getPreviousMatch(idLeague: String?): String {
-            return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("json")
-                .appendPath(BuildConfig.TSDB_API_KEY)
-                .appendPath("eventspastleague.php")
-                .appendQueryParameter("id", idLeague)
-                .build()
-                .toString()
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/eventspastleague.php?id=" + idLeague
         }
 
         fun getNextMatch(idLeague: String?): String {
-            return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("json")
-                .appendPath(BuildConfig.TSDB_API_KEY)
-                .appendPath("eventsnextleague.php")
-                .appendQueryParameter("id", idLeague)
-                .build()
-                .toString()
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/eventsnextleague.php?id=" + idLeague
         }
 
         fun getTeamDetail(idTeam: String?): String {
-            return Uri.parse(BuildConfig.BASE_URL).buildUpon()
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("json")
-                .appendPath(BuildConfig.TSDB_API_KEY)
-                .appendPath("lookupteam.php")
-                .appendQueryParameter("id", idTeam)
-                .build()
-                .toString()
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupteam.php?id=" + idTeam
         }
     }
 

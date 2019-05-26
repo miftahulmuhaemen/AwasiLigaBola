@@ -1,6 +1,11 @@
 package com.example.ligasubmission.util
 
+import android.support.test.espresso.IdlingResource
+import android.support.test.espresso.idling.CountingIdlingResource
 import android.view.View
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlin.coroutines.CoroutineContext
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -59,4 +64,32 @@ object DatabaseConst {
         const val strDate: String = "strDate"
         const val strTime: String = "strTime"
         const val strThumb: String = "strThumb"
+    const val idHomeTeam: String = "idHomeTeam"
+    const val idAwayTeam: String = "idAwayTeam"
+}
+
+open class CoroutineContextProvider {
+    open val main: CoroutineContext by lazy { Dispatchers.Main }
+}
+
+
+class TestContextProvider : CoroutineContextProvider() {
+    @ExperimentalCoroutinesApi
+    override val main: CoroutineContext = Dispatchers.Unconfined
+}
+
+object EspressoIdlingResource {
+    private val RESOURCE = "GLOBAL"
+    private val countingIdlingResource = CountingIdlingResource(RESOURCE)
+
+    val idlingresource: IdlingResource
+        get() = countingIdlingResource
+
+    fun increment() {
+        countingIdlingResource.increment()
+    }
+
+    fun decrement() {
+        countingIdlingResource.decrement()
+    }
 }
