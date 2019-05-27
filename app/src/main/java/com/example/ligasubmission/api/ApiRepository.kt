@@ -9,7 +9,6 @@ import java.net.URL
 class ApiRepository {
 
     object TheSportDBApi {
-
         fun getDetailLeague(idLeague: String?): String {
             return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupleague.php?id=" + idLeague
         }
@@ -24,6 +23,18 @@ class ApiRepository {
 
         fun getTeamDetail(idTeam: String?): String {
             return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookupteam.php?id=" + idTeam
+        }
+
+        fun getClassment(idLeague: String?): String {
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookuptable.php?l=" + idLeague
+        }
+
+        fun getTeamOnLeague(idLeague: String?): String {
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookup_all_teams.php?id=" + idLeague
+        }
+
+        fun getPlayers(idTeam: String?): String {
+            return BuildConfig.BASE_URL + "api/v1/json/${BuildConfig.TSDB_API_KEY}" + "/lookup_all_players.php?id=" + idTeam
         }
     }
 

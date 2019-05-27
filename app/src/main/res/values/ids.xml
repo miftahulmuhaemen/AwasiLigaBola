@@ -32,4 +32,10 @@
     <item name="Score" type="id"/>
     <item name="homeTeamImage" type="id"/>
     <item name="recylerVieww" type="id"/>
+    <item name="header" type="id"/>
+    <item name="total" type="id"/>
+    <item name="loss" type="id"/>
+    <item name="draw" type="id"/>
+    <item name="win" type="id"/>
+    <item name="manager" type="id"/>
 </resources>

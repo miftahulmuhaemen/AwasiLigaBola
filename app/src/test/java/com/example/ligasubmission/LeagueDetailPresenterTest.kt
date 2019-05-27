@@ -1,7 +1,7 @@
 package com.example.ligasubmission
 import com.example.ligasubmission.api.ApiRepository
-import com.example.ligasubmission.leagueDetailActivity.LeagueDetailPresenter
-import com.example.ligasubmission.leagueDetailActivity.LeagueDetailView
+import com.example.ligasubmission.detailLeague.LeagueDetailPresenter
+import com.example.ligasubmission.detailLeague.LeagueDetailView
 import com.example.ligasubmission.model.League
 import com.example.ligasubmission.model.LeaguesResponse
 import com.example.ligasubmission.util.TestContextProvider

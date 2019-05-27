@@ -13,16 +13,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.example.ligasubmission.favoriteActivity.FavoritActivity">
+        <activity android:name=".detailPlayer.DetailPlayerActivity">
         </activity>
-        <activity android:name=".listDetailMatchActivity.ListDetailMatchActivity">
+        <activity android:name=".detailTeam.DetailTeamActivity">
         </activity>
-        <activity android:name=".listLeagueActivity.ListLeagueActivity">
+        <activity android:name=".favorite.FavoriteActivity">
         </activity>
-        <activity android:name=".leagueDetailActivity.LeagueDetailActivity">
+        <activity android:name=".detailMatch.DetailMatchActivity">
+        </activity>
+        <activity android:name=".listMatch.ListMatchActivity">
+        </activity>
+        <activity android:name=".detailLeague.LeagueDetailActivity">
         </activity>
         <activity
-                android:name=".mainActivity.MainActivity"
+                android:name=".mainMenu.MainActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

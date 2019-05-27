@@ -10,7 +10,7 @@ import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
-import com.example.ligasubmission.mainActivity.MainActivity
+import com.example.ligasubmission.mainMenu.MainActivity
 import com.example.ligasubmission.util.EspressoIdlingResource
 import com.example.ligasubmission.util.Util
 import org.hamcrest.Matchers.`is`
